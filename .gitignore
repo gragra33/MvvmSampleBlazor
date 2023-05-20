@@ -39,7 +39,7 @@ bld/
 #wwwroot/
 
 # jetbrains
-.idea
+.idea/
 
 # Visual Studio 2017 auto generated files
 Generated\ Files/
