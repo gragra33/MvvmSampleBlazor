@@ -13,6 +13,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     private TItem? _selectedItem;
     private int _selectedIndex = -1;
 
+    // cached reference
+    private IList<TItem>? _items;
+
     private ElementReference? SelectedItemElement { get; set; }
     
     private Lazy<Task<IJSObjectReference>>? _moduleTask;
@@ -20,6 +23,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     private DotNetObjectReference<ListBox<TItem>>? DotNetInstance;
 
     private const string  ScriptFile = "./_content/Blazor.Lists/scripts/lists.js";
+
+    private int _itemsCount => _items?.Count ?? 0;
 
     #endregion
 
@@ -50,14 +55,18 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     public bool ReadOnly { get; set; }
 
     [Parameter]
+#pragma warning disable BL0007
     public TItem SelectedItem
+#pragma warning restore BL0007
     {
         get => _selectedItem!;
         set => InvokeAsync(async () => await SetSelectedItemAsync(value));
     }
 
     [Parameter]
+#pragma warning disable BL0007
     public int SelectedIndex
+#pragma warning restore BL0007
     {
         get => _selectedIndex;
         set => InvokeAsync(async () => await SetSelectedIndexAsync(value));
@@ -75,7 +84,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         if (_selectedItem is not null && _selectedItem.Equals(item)) return;
 
         _selectedItem = item;
-        _selectedIndex = ItemSource!.ToList().IndexOf(item);
+        _selectedIndex = _items!.IndexOf(item);
 
         await SelectionChanged.InvokeAsync(new ListBoxEventArgs<TItem>(this, _selectedItem)).ConfigureAwait(false);
     }
@@ -90,6 +99,13 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
         DotNetInstance = DotNetObjectReference.Create(this);
         _moduleTask = new(() => jsRuntime!.ModuleFactory(ScriptFile));
+    }
+
+    protected override void OnParametersSet()
+    {
+        // make a reference to avoid excessive casting
+        if (_items is null || _items.Count != ItemSource?.Count())
+            _items = ItemSource?.ToList();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -125,20 +141,20 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     private async Task SetSelectedIndexAsync(int index)
     {
-        if (ItemSource is null || index >= ItemSource.ToList().Count) return;
+        if (_items is null || index >= _items.Count) return;
 
         _selectedIndex = index;
-        _selectedItem = index < 0 ? default : ItemSource.ToList()[index];
+        _selectedItem = index < 0 ? default : _items[index];
 
         await ScrollIntoView().ConfigureAwait(false);
     }
 
     private async Task SetSelectedItemAsync(TItem item)
     {
-        if (ItemSource is null || !ItemSource.Contains(item)) return;
+        if (_items is null || !_items.Contains(item)) return;
 
         _selectedItem = item;
-        _selectedIndex = ItemSource.ToList().IndexOf(item);
+        _selectedIndex = _items.IndexOf(item);
 
         await ScrollIntoView().ConfigureAwait(false);
     }
@@ -191,33 +207,41 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     public async Task MovePreviousAsync()
     {
         if (_selectedIndex < 1) return;
+        
         await SetSelectedIndexAsync(SelectedIndex - 1).ConfigureAwait(false);
         await ScrollIntoView().ConfigureAwait(false);
     }
 
     public async Task MoveNextAsync()
     {
-        if (_selectedIndex >= ItemSource!.ToList().Count) return;
+        if (_selectedIndex >= _itemsCount) return;
+        
         await SetSelectedIndexAsync(SelectedIndex + 1).ConfigureAwait(false);
         await ScrollIntoView().ConfigureAwait(false);
     }
 
     public async Task MoveFirstAsync()
     {
-        if (ItemSource!.ToList().Count == 0) return;
+        if (_itemsCount == 0) return;
+        
         await SetSelectedIndexAsync(0).ConfigureAwait(false);
         await ScrollIntoView().ConfigureAwait(false);
     }
 
     public async Task MoveLastAsync()
     {
-        if (ItemSource!.ToList().Count == 0) return;
-        await SetSelectedIndexAsync(ItemSource!.ToList().Count - 1).ConfigureAwait(false);
+        int count = _itemsCount;
+        if (count == 0) return;
+
+        await SetSelectedIndexAsync(count - 1).ConfigureAwait(false);
         await ScrollIntoView().ConfigureAwait(false);
     }
 
     public async ValueTask DisposeAsync()
     {
+        if (_items is not null)
+            _items = null;
+
         if (_moduleTask!.IsValueCreated)
         {
             IJSObjectReference module = await _moduleTask.Value;
