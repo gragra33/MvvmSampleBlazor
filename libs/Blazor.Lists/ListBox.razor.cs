@@ -81,8 +81,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     }
 
     public EventCallback<int> SelectedIndexChanged { get; set; }
-
-
+    
     #endregion
 
     #region Events
