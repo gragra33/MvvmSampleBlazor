@@ -16,13 +16,15 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     // cached reference
     private IList<TItem>? _items;
 
+    private ElementReference? componentElement { get; set; }
     private ElementReference? SelectedItemElement { get; set; }
     
-    private Lazy<Task<IJSObjectReference>>? _moduleTask;
+    private Lazy<Task<IJSObjectReference>>? _listModuleTask;
+    private Lazy<Task<IJSObjectReference>>? _commonModuleTask;
     
     private DotNetObjectReference<ListBox<TItem>>? DotNetInstance;
 
-    private const string  ScriptFile = "./_content/Blazor.Lists/scripts/lists.js";
+    private const string  ListScriptFile = "./_content/Blazor.Lists/scripts/lists.js";
 
     private int _itemsCount => _items?.Count ?? 0;
 
@@ -98,7 +100,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         base.OnInitialized();
 
         DotNetInstance = DotNetObjectReference.Create(this);
-        _moduleTask = new(() => jsRuntime!.ModuleFactory(ScriptFile));
+        _listModuleTask = new(() => jsRuntime!.ModuleFactory(ListScriptFile));
+        _commonModuleTask = new(() => jsRuntime!.ModuleFactory(jsRuntime!.GetCommonScriptPath()));
     }
 
     protected override void OnParametersSet()
@@ -167,6 +170,13 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         return Task.CompletedTask;
     }
 
+    private async Task FocusNextElement(bool isReverse = false)
+    {
+        await (await GetModuleInstance(true))
+            .FocusNextElement(componentElement!.Value, isReverse)
+            .ConfigureAwait(false);
+    }
+
     public async Task ScrollIntoView(ElementReference? itemElement)
     {
         // now scroll the element into view
@@ -175,8 +185,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
             .ConfigureAwait(false);
     }
 
-    private async Task<IJSObjectReference> GetModuleInstance()
-        => await _moduleTask!.Value;
+    private async Task<IJSObjectReference> GetModuleInstance(bool isCommonModule = false)
+        => await (isCommonModule ? _commonModuleTask : _listModuleTask)!.Value;
 
     private async Task OnKeyDown(KeyboardEventArgs arg)
     {
@@ -199,11 +209,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
             case "End":
                 await MoveLastAsync();
                 break;
-            // future .. if we want to support manual selection, not select on navigation...
-            //case "Space":
-            //case "Enter":
-            //    await this.SelectItemAsync(this._focusPanel);
-            //    break;
+            case "Tab":
+                await FocusNextElement(arg.ShiftKey);
+                break;
         }
     }
 
@@ -245,9 +253,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         if (_items is not null)
             _items = null;
 
-        if (_moduleTask!.IsValueCreated)
+        if (_listModuleTask!.IsValueCreated)
         {
-            IJSObjectReference module = await _moduleTask.Value;
+            IJSObjectReference module = await _listModuleTask.Value;
             await module.DisposeAsync();
         }
     }

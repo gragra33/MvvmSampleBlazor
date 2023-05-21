@@ -2,7 +2,8 @@
 @inherits ComponentControlBase
 @using CSS = Blazor.Lists.Css.CssClass
 
-<div @attributes="AdditionalAttributes" class="@GetClass()" style="@Style"
+<div @attributes="AdditionalAttributes" @ref=componentElement
+     class="@GetClass()" style="@Style"
      id="@UniqueId" role="listbox" tabindex="0" aria-label="@AriaLabel"
      @onkeydown="@(async arg => await OnKeyDown(arg))"
      @onkeydown:preventDefault="true"
