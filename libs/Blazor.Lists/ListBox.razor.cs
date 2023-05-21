@@ -182,6 +182,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     {
         //Console.WriteLine($"** KEY: {arg.Code} | {arg.Key}");
 
+        if (_itemsCount == 0 || _selectedIndex == -1)
+            return;
+
         switch (arg.Key)
         {
             case "ArrowUp":
