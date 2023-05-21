@@ -118,6 +118,13 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         if (_items is null)
             return;
 
+        if (ReadOnly)
+        {
+            _selectedIndex = -1;
+            _selectedItem = default;
+            return;
+        }
+
         if (_selectedIndex >= _itemsCount)
             _selectedIndex = _itemsCount - 1;
 
@@ -133,10 +140,12 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         if (_scrollIntoViewRequired)
         {
             _scrollIntoViewRequired = false;
-            await ScrollIntoView(SelectedItemElement!.Value).ConfigureAwait(false);
+
+            if (SelectedItemElement is not null)
+                await ScrollIntoView(SelectedItemElement!.Value).ConfigureAwait(false);
         }
 
-        if (_isSelectionChanged && _selectedItem is not null)
+        if (_isSelectionChanged && _selectedItem is not null && !ReadOnly)
         {
             _isSelectionChanged = false;
             await SelectionChanged.InvokeAsync(new ListBoxEventArgs<TItem>(this, _selectedItem!))
@@ -168,7 +177,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     private void SetSelectedIndex(int index)
     {
-        if (_items is null || index >= _items.Count) return;
+        if (_items is null || index >= _items.Count || ReadOnly)
+            return;
 
         _selectedIndex = index;
         _selectedItem = index < 0 ? default : _items[index];
@@ -180,7 +190,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     private void SetSelectedItem(TItem item)
     {
-        if (_items is null || !_items.Contains(item)) return;
+        if (_items is null || !_items.Contains(item) || ReadOnly)
+            return;
 
         _selectedItem = item;
         _selectedIndex = _items.IndexOf(item);
@@ -203,7 +214,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         StateHasChanged();
     }
 
-    private async Task ScrollIntoView(ElementReference? itemElement)
+    public async Task ScrollIntoView(ElementReference? itemElement)
     {
         // now scroll the element into view
         await (await GetModuleInstance())
@@ -243,6 +254,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     public void MovePrevious()
     {
+        if (ReadOnly)
+            return;
+
         if (_selectedIndex < 0)
         {
             MoveFirst();
@@ -257,6 +271,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     public void MoveNext()
     {
+        if (ReadOnly)
+            return;
+
         if (_selectedIndex < 0)
         {
             MoveFirst();
@@ -271,6 +288,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     public void MoveFirst()
     {
+        if (ReadOnly)
+            return;
+
         if (_itemsCount == 0)
             return;
         
@@ -279,6 +299,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     public void MoveLast()
     {
+        if (ReadOnly)
+            return;
+
         int count = _itemsCount;
         if (count == 0)
             return;
