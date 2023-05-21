@@ -13,8 +13,14 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     private TItem? _selectedItem;
     private int _selectedIndex = -1;
 
+    // track request & wait for ui refresh
+    private bool _scrollIntoViewRequired;
+
     // cached reference
     private IList<TItem>? _items;
+
+    // safe get count
+    private int _itemsCount => _items?.Count ?? 0;
 
     private ElementReference? componentElement { get; set; }
     private ElementReference? SelectedItemElement { get; set; }
@@ -25,8 +31,6 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     private DotNetObjectReference<ListBox<TItem>>? DotNetInstance;
 
     private const string  ListScriptFile = "./_content/Blazor.Lists/scripts/lists.js";
-
-    private int _itemsCount => _items?.Count ?? 0;
 
     #endregion
 
@@ -162,7 +166,6 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         await ScrollIntoView().ConfigureAwait(false);
     }
 
-    private bool _scrollIntoViewRequired;
     private Task ScrollIntoView()
     {
         //await ScrollIntoView(SelectedItemElement!.Value).ConfigureAwait(false);
@@ -177,7 +180,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
             .ConfigureAwait(false);
     }
 
-    public async Task ScrollIntoView(ElementReference? itemElement)
+    private async Task ScrollIntoView(ElementReference? itemElement)
     {
         // now scroll the element into view
         await (await GetModuleInstance())

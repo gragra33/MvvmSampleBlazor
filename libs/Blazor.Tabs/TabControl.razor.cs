@@ -1,6 +1,7 @@
 ﻿using Blazor.Common;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using CSS = Blazor.Tabs.Css.CssClass;
 
 namespace Blazor.Tabs;
@@ -15,9 +16,16 @@ public partial class TabControl : ComponentControlBase
 
     private int _selectedIndex;
 
+    private Lazy<Task<IJSObjectReference>>? _commonModuleTask;
+    
+    private DotNetObjectReference<TabControl>? DotNetInstance;
+
     #endregion
 
     #region Properties
+
+    [Inject]
+    public IJSRuntime? jsRuntime { get; set; }
 
     [Parameter]
     public string? HeaderClass { get; set; }
@@ -46,6 +54,14 @@ public partial class TabControl : ComponentControlBase
     #endregion
 
     #region Overrides
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        DotNetInstance = DotNetObjectReference.Create(this);
+        _commonModuleTask = new(() => jsRuntime!.ModuleFactory(jsRuntime!.GetCommonScriptPath()));
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -161,6 +177,16 @@ public partial class TabControl : ComponentControlBase
     private string GetTabPanelStyle(TabPanel tabPanel)
         => tabPanel.Style ?? "";
 
+    private async Task FocusNextElement(bool isReverse = false)
+    {
+        await (await GetModuleInstance())
+            .FocusNextElement(isReverse: isReverse)
+            .ConfigureAwait(false);
+    }
+
+    private async Task<IJSObjectReference> GetModuleInstance()
+        => await _commonModuleTask!.Value;
+
     private async Task OnKeyDown(KeyboardEventArgs arg)
     {
         //Console.WriteLine($"** KEY: {arg.Code} | {arg.Key}");
@@ -179,11 +205,9 @@ public partial class TabControl : ComponentControlBase
             case "End":
                 await MoveLastAsync();
                 break;
-            // future .. if we want to support manual selection, not select on navigation...
-            //case "Space":
-            //case "Enter":
-            //    await this.SelectItemAsync(this._focusPanel);
-            //    break;
+            case "Tab":
+                await FocusNextElement(arg.ShiftKey);
+                break;
         }
     }
 

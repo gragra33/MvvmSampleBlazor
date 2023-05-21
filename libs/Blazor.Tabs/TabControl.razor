@@ -7,7 +7,8 @@
     </CascadingValue>
 }
 
-<div @attributes="AdditionalAttributes" class="@GetTabsClass()" style="@GetTabsStyle()">
+<div @attributes="AdditionalAttributes"
+     class ="@GetTabsClass()" style="@GetTabsStyle()">
     <div class="@GetHeaderClass()" style="@GetHeaderStyle()" role="tablist">
         @foreach (TabPanel tabPanel in _panels)
         {

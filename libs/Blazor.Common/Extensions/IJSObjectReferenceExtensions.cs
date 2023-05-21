@@ -16,7 +16,7 @@ public static class IJSObjectReferenceExtensions
     public static async Task<string> GetElementHeightAsync(this IJSObjectReference? jsObjRef, ElementReference element)
         => await jsObjRef!.InvokeAsync<string>("getElementHeight", element).ConfigureAwait(false);
 
-    public static async Task FocusNextElement(this IJSObjectReference? jsObjRef, ElementReference element, bool isReverse = false)
+    public static async Task FocusNextElement(this IJSObjectReference? jsObjRef, ElementReference? element = null, bool isReverse = false)
         => await jsObjRef.InvokeVoidAsync("focusNextElement", element, isReverse).ConfigureAwait(false);
 
     #endregion
