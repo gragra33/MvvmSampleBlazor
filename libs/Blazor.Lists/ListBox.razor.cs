@@ -115,16 +115,22 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         // make a reference to avoid excessive casting
         if (_items is null || _items.Count != ItemSource?.Count())
             _items = ItemSource?.ToList();
+
+        if (_items is null)
+            return;
+
+        if (_selectedIndex >= _itemsCount)
+            _selectedIndex = _itemsCount - 1;
+
+        if (_selectedIndex > -1 && _selectedItem is null)
+            _selectedItem = _items[_selectedIndex];
+
+        if (_selectedIndex == -1 && _selectedItem is not null)
+            _selectedIndex = _items.IndexOf(_selectedItem);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if(firstRender)
-        {
-            _scrollIntoViewRequired = false;
-            _isSelectionChanged = false;
-        }
-
         if (_scrollIntoViewRequired)
         {
             _scrollIntoViewRequired = false;
@@ -213,7 +219,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     {
         //Console.WriteLine($"** KEY: {arg.Code} | {arg.Key}");
 
-        if (_itemsCount == 0 || _selectedIndex == -1)
+        if (_itemsCount == 0)
             return;
 
         switch (arg.Key)
@@ -238,14 +244,26 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     public void MovePrevious()
     {
-        if (_selectedIndex < 1)
+        if (_selectedIndex < 0)
+        {
+            MoveFirst();
             return;
-        
+        }
+
+        if (_selectedIndex == 0)
+            return;
+
         SetSelectedIndex(SelectedIndex - 1);
     }
 
     public void MoveNext()
     {
+        if (_selectedIndex < 0)
+        {
+            MoveFirst();
+            return;
+        }
+
         if (_selectedIndex >= _itemsCount)
             return;
         
