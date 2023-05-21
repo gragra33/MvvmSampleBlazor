@@ -16,6 +16,8 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
     // track request & wait for ui refresh
     private bool _scrollIntoViewRequired;
 
+    private bool _isSelectionChanged;
+
     // cached reference
     private IList<TItem>? _items;
 
@@ -66,7 +68,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 #pragma warning restore BL0007
     {
         get => _selectedItem!;
-        set => InvokeAsync(async () => await SetSelectedItemAsync(value));
+        set => _selectedItem = value;
     }
 
     [Parameter]
@@ -75,7 +77,7 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 #pragma warning restore BL0007
     {
         get => _selectedIndex;
-        set => InvokeAsync(async () => await SetSelectedIndexAsync(value));
+        set => _selectedIndex = value;
     }
 
     public EventCallback<int> SelectedIndexChanged { get; set; }
@@ -117,10 +119,23 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
+        if(firstRender)
+        {
+            _scrollIntoViewRequired = false;
+            _isSelectionChanged = false;
+        }
+
         if (_scrollIntoViewRequired)
         {
             _scrollIntoViewRequired = false;
             await ScrollIntoView(SelectedItemElement!.Value).ConfigureAwait(false);
+        }
+
+        if (_isSelectionChanged && _selectedItem is not null)
+        {
+            _isSelectionChanged = false;
+            await SelectionChanged.InvokeAsync(new ListBoxEventArgs<TItem>(this, _selectedItem!))
+                .ConfigureAwait(false);
         }
     }
 
@@ -146,31 +161,28 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         return isSelected;
     }
 
-    private async Task SetSelectedIndexAsync(int index)
+    private void SetSelectedIndex(int index)
     {
         if (_items is null || index >= _items.Count) return;
 
         _selectedIndex = index;
         _selectedItem = index < 0 ? default : _items[index];
 
-        await ScrollIntoView().ConfigureAwait(false);
+        _isSelectionChanged = true;
+
+        ScrollIntoView();
     }
 
-    private async Task SetSelectedItemAsync(TItem item)
+    private void SetSelectedItem(TItem item)
     {
         if (_items is null || !_items.Contains(item)) return;
 
         _selectedItem = item;
         _selectedIndex = _items.IndexOf(item);
 
-        await ScrollIntoView().ConfigureAwait(false);
-    }
+       _isSelectionChanged = true;
 
-    private Task ScrollIntoView()
-    {
-        //await ScrollIntoView(SelectedItemElement!.Value).ConfigureAwait(false);
-        _scrollIntoViewRequired = true;
-        return Task.CompletedTask;
+        ScrollIntoView();
     }
 
     private async Task FocusNextElement(bool isReverse = false)
@@ -178,6 +190,12 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         await (await GetModuleInstance(true))
             .FocusNextElement(componentElement!.Value, isReverse)
             .ConfigureAwait(false);
+    }
+
+    private void ScrollIntoView()
+    {
+        _scrollIntoViewRequired = true;
+        StateHasChanged();
     }
 
     private async Task ScrollIntoView(ElementReference? itemElement)
@@ -201,16 +219,16 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         switch (arg.Key)
         {
             case "ArrowUp":
-                await MovePreviousAsync();
+                MovePrevious();
                 break;
             case "ArrowDown":
-                await MoveNextAsync();
+                MoveNext();
                 break;
             case "Home":
-                await MoveFirstAsync();
+                MoveFirst();
                 break;
             case "End":
-                await MoveLastAsync();
+                MoveLast();
                 break;
             case "Tab":
                 await FocusNextElement(arg.ShiftKey);
@@ -218,37 +236,37 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         }
     }
 
-    public async Task MovePreviousAsync()
+    public void MovePrevious()
     {
-        if (_selectedIndex < 1) return;
+        if (_selectedIndex < 1)
+            return;
         
-        await SetSelectedIndexAsync(SelectedIndex - 1).ConfigureAwait(false);
-        await ScrollIntoView().ConfigureAwait(false);
+        SetSelectedIndex(SelectedIndex - 1);
     }
 
-    public async Task MoveNextAsync()
+    public void MoveNext()
     {
-        if (_selectedIndex >= _itemsCount) return;
+        if (_selectedIndex >= _itemsCount)
+            return;
         
-        await SetSelectedIndexAsync(SelectedIndex + 1).ConfigureAwait(false);
-        await ScrollIntoView().ConfigureAwait(false);
+        SetSelectedIndex(SelectedIndex + 1);
     }
 
-    public async Task MoveFirstAsync()
+    public void MoveFirst()
     {
-        if (_itemsCount == 0) return;
+        if (_itemsCount == 0)
+            return;
         
-        await SetSelectedIndexAsync(0).ConfigureAwait(false);
-        await ScrollIntoView().ConfigureAwait(false);
+        SetSelectedIndex(0);
     }
 
-    public async Task MoveLastAsync()
+    public void MoveLast()
     {
         int count = _itemsCount;
-        if (count == 0) return;
+        if (count == 0)
+            return;
 
-        await SetSelectedIndexAsync(count - 1).ConfigureAwait(false);
-        await ScrollIntoView().ConfigureAwait(false);
+        SetSelectedIndex(count - 1);
     }
 
     public async ValueTask DisposeAsync()
