@@ -18,7 +18,7 @@ builder.Services
     .AddMvvmNavigation();
 
 #if DEBUG
-builder.Logging.SetMinimumLevel(LogLevel.Debug);
+builder.Logging.SetMinimumLevel(LogLevel.Trace);
 #endif
 
 await builder.Build().RunAsync();

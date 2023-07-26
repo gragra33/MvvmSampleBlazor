@@ -7,16 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Markdig" Version="0.31.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.5" PrivateAssets="all" />
+    <PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.9" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\libs\Blazor.Common\Blazor.Common.csproj" />
-    <ProjectReference Include="..\libs\Blazor.Lists\Blazor.Lists.csproj" />
-    <ProjectReference Include="..\libs\Blazor.Tabs\Blazor.Tabs.csproj" />
-    <ProjectReference Include="..\MvvmSample.Core\MvvmSample.Core.csproj" />
+    <ProjectReference Include="..\MvvmSampleBlazor.Core\MvvmSampleBlazor.Core.csproj" />
   </ItemGroup>
 
 </Project>

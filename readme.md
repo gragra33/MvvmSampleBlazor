@@ -3,7 +3,7 @@ I released the [Blazing.MVVM](https://github.com/gragra33/Blazing.Mvvm) library 
 
 Whilst the [repo](https://github.com/gragra33/Blazing.Mvvm) contains a basic sample project showing how to use the library, I wanted to include a sample that takes an existing project for a different application type and, with minimal changes, make it work for Blazor. So I have taken Microsoft's [Xamarin Sample Project](https://github.com/CommunityToolkit/MVVM-Samples) and converted it to Blazor.
 
-## Changes made
+## Changes made to Xamarin Sample for Blazor 
 
 The `MvvmSample.Core` project remains mostly unchanged, I've added base classes to the ViewModels to enable Blazor binding updates.
 
@@ -37,6 +37,16 @@ Lastly, I have updated all of the documentation used in the Sample application f
 ## Components
 
 Xamarin comes with a rich set of controls. Blazor is lean in comparison. To keep this project lean, I have included my own `ListBox` and `Tab` controls - enjoy! When I have time, I will endeavor to complete and release a control library for Blazor.
+
+## WASM + New WPF Blazor Hybrid sample applications
+
+I have added a new WPF Hybrid app to demonstrate Calling into Blazor from WPF using MVVM. To do this, I have:
+* moved the core shared parts from the BlazorSample app to a new RCL (Razor Class Library)
+* Moved the Assests to a standard `Content` folder as the `wwwroot` is no longer accessable. The `BlazorWebView` host control uses ip address `0.0.0.0` which is invalid for the `httpClient`.
+* Added new `FileService` class to the WPF app to use the `File` class and not the `HttpClient`.
+* Added  a new App.Razor to the WPF app for custom Blazor layout and hook the shared state for handling navigation requests from WPF
+
+To enable the calling into the Blazor app, I have used a static state class to hold a reference to the `NavigationManager` and `MvvvmNavigationManager` classes.
 
 ## Summary
 

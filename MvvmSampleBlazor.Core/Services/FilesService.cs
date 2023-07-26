@@ -1,4 +1,6 @@
-﻿using MvvmSample.Core.Services;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.Hosting;
+using MvvmSample.Core.Services;
 
 namespace MvvmSampleBlazor.Services;
 
@@ -9,7 +11,7 @@ public class FilesService : IFilesService
     public FilesService(HttpClient? httpClient)
     {
         _httpClient = httpClient;
-        InstallationPath = _httpClient!.BaseAddress?.ToString() ?? "";
+        InstallationPath = _httpClient?.BaseAddress?.ToString() ?? "";
     }
 
     public string InstallationPath { get; }
