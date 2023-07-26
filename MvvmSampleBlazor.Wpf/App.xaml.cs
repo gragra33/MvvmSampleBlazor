@@ -25,8 +25,6 @@ public partial class App
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-        //services.AddScoped<IWeatherForecastService, WeatherForecastService>();
-        services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("file://0.0.0.0/")});
 
         services
             .AddSingleton(RestService.For<IRedditService>("https://www.reddit.com/"))

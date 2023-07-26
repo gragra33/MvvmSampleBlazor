@@ -1,0 +1,22 @@
+using Avalonia;
+using Avalonia.Controls;
+using Avalonia.Controls.Shapes;
+using DemoApp;
+using Microsoft.AspNetCore.Components.WebView.WindowsForms;
+
+namespace MvvmSampleBlazor.Avalonia;
+
+public partial class MainWindow : Window
+{
+    public MainWindow()
+    {
+        IServiceProvider? services = (Application.Current as App)?.Services;
+        RootComponentsCollection rootComponents = new() { new("#app", typeof(HybridApp), null) };
+
+        Resources.Add("services", services);
+        Resources.Add("rootComponents", rootComponents);
+
+        InitializeComponent();
+    
+    }
+}
