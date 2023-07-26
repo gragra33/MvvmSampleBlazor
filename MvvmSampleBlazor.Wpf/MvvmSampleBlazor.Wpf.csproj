@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	  <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.92" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="wwwroot\favicon.png">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="wwwroot\icon-192.png">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="wwwroot\index.html">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Assets\docs\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MvvmSampleBlazor.Core\MvvmSampleBlazor.Core.csproj" />
+	</ItemGroup>
+</Project>

@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <SupportedPlatform Include="browser" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+		<PackageReference Include="Markdig" Version="0.31.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.9" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.9" PrivateAssets="all" />
+		<PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="7.0.0" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\libs\Blazor.Common\Blazor.Common.csproj" />
+    <ProjectReference Include="..\libs\Blazor.Lists\Blazor.Lists.csproj" />
+    <ProjectReference Include="..\libs\Blazor.Tabs\Blazor.Tabs.csproj" />
+    <ProjectReference Include="..\MvvmSample.Core\MvvmSample.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+</Project>

@@ -1,4 +1,7 @@
-﻿using MvvmSample.Core.Services;
+﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using MvvmSample.Core.Services;
 using MvvmSample.Core.ViewModels;
 using MvvmSample.Core.ViewModels.Widgets;
 using MvvmSampleBlazor.Services;
