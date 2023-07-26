@@ -38,13 +38,13 @@ Lastly, I have updated all of the documentation used in the Sample application f
 
 Xamarin comes with a rich set of controls. Blazor is lean in comparison. To keep this project lean, I have included my own `ListBox` and `Tab` controls - enjoy! When I have time, I will endeavor to complete and release a control library for Blazor.
 
-## WASM + New WPF Blazor Hybrid sample applications
+## WASM + New WPF & Avalonia Blazor Hybrid sample applications
 
-I have added a new WPF Hybrid app to demonstrate Calling into Blazor from WPF using MVVM. To do this, I have:
+I have added new WPF/Avalonia Hybrid apps to demonstrate Calling into Blazor from WPF/Avalonia using MVVM. To do this, I have:
 * moved the core shared parts from the BlazorSample app to a new RCL (Razor Class Library)
 * Moved the Assests to a standard `Content` folder as the `wwwroot` is no longer accessable. The `BlazorWebView` host control uses ip address `0.0.0.0` which is invalid for the `httpClient`.
-* Added new `FileService` class to the WPF app to use the `File` class and not the `HttpClient`.
-* Added  a new App.Razor to the WPF app for custom Blazor layout and hook the shared state for handling navigation requests from WPF
+* Added new `FileService` class to the WPF/Avalonia app to use the `File` class and not the `HttpClient`.
+* Added  a new App.Razor to the WPF/Avalonia app for custom Blazor layout and hook the shared state for handling navigation requests from WPF/Avalonia
 
 To enable the calling into the Blazor app, I have used a static state class to hold a reference to the `NavigationManager` and `MvvvmNavigationManager` classes.
 
