@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net7.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+	  <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.92" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="wwwroot\index.html">
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Assets\docs\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\AsyncRelayCommand.md" Link="Assets\docs\AsyncRelayCommand.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\Introduction.md" Link="Assets\docs\Introduction.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\Ioc.md" Link="Assets\docs\Ioc.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\Messenger.md" Link="Assets\docs\Messenger.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\ObservableObject.md" Link="Assets\docs\ObservableObject.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\PuttingThingsTogether.md" Link="Assets\docs\PuttingThingsTogether.md" />
+	  <None Include="..\MvvmSampleBlazor\wwwroot\Assets\docs\RelayCommand.md" Link="Assets\docs\RelayCommand.md" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\MvvmSampleBlazor.Core\MvvmSampleBlazor.Core.csproj" />
+	</ItemGroup>
+</Project>
