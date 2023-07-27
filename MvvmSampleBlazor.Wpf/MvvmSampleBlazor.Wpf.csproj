@@ -9,7 +9,7 @@
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+		<PackageReference Include="Blazing.Mvvm" Version="1.0.3" />
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.92" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
 	</ItemGroup>

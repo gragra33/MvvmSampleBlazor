@@ -5,6 +5,7 @@ using Avalonia.Platform;
 using DynamicData;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 using System;
+using Avalonia.Interactivity;
 
 namespace Baksteen.Avalonia.Blazor;
 
@@ -156,9 +157,9 @@ public class BlazorWebView : NativeControlHost
     }
 
     // DestroyNativeControlCore doesn't seem to get called when the app is shutting down, so lets dispose the blazorwebview earlier..
-    protected override void OnUnloaded()
+    protected override void OnUnloaded(RoutedEventArgs e)
     {
         _destroyableBlazorWebViewHandle?.Destroy();
-        base.OnUnloaded();
+        base.OnUnloaded(e);
     }
 }

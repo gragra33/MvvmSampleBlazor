@@ -12,7 +12,7 @@
     <Compile Remove="ViewModels\Widgets\ValidatorViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
-	  <PackageReference Include="Blazing.Mvvm" Version="1.0.2" />
+	  <PackageReference Include="Blazing.Mvvm" Version="1.0.3" />
 	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
     <PackageReference Include="Refit" Version="7.0.0" />

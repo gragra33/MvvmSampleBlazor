@@ -148,8 +148,9 @@ public partial class ListBox<TItem> : ComponentControlBase, IAsyncDisposable
         if (_isSelectionChanged && _selectedItem is not null && !ReadOnly)
         {
             _isSelectionChanged = false;
-            await SelectionChanged.InvokeAsync(new ListBoxEventArgs<TItem>(this, _selectedItem!))
-                .ConfigureAwait(false);
+            await InvokeAsync(async () => await SelectionChanged
+                .InvokeAsync(new ListBoxEventArgs<TItem>(this, _selectedItem!))
+                .ConfigureAwait(false));
         }
     }
 
