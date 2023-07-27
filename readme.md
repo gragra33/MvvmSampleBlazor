@@ -8,26 +8,33 @@ Whilst the [repo](https://github.com/gragra33/Blazing.Mvvm) contains a basic sam
 The `MvvmSample.Core` project remains mostly unchanged, I've added base classes to the ViewModels to enable Blazor binding updates.
 
 So, as an example, the `SamplePageViewModel` was changed from:
+
 ```csharp
 public class MyPageViewModel : ObservableObject
 {
     // code goes here
 }
 ```
+
 to:
+
 ```csharp
 public class MyPageViewModel : ViewModelBase
 {
     // code goes here
 }
 ```
-The `ViewModelBase` wraps the `ObservableObject` class. No other chages required.
+
+The `ViewModelBase` wraps the `ObservableObject` class. No other changes required.
 
 For the Xamarin Pages, wiring up the `DataContext` is done with:
+
 ```csharp
 BindingContext = Ioc.Default.GetRequiredService<MyPageViewModel>();
 ```
+
 With [Blazing.MVVM](https://github.com/gragra33/Blazing.Mvvm), it is simply:
+
 ```html
 @inherits MvvmComponentBase<MyPageViewModel>
 ```
@@ -42,7 +49,7 @@ Xamarin comes with a rich set of controls. Blazor is lean in comparison. To keep
 
 I have added new WPF/Avalonia Hybrid apps to demonstrate Calling into Blazor from WPF/Avalonia using MVVM. To do this, I have:
 * moved the core shared parts from the BlazorSample app to a new RCL (Razor Class Library)
-* Moved the Assests to a standard `Content` folder as the `wwwroot` is no longer accessable. The `BlazorWebView` host control uses ip address `0.0.0.0` which is invalid for the `httpClient`.
+* Moved the Assets to a standard `Content` folder as the `wwwroot` is no longer accessable. The `BlazorWebView` host control uses ip address `0.0.0.0` which is invalid for the `httpClient`.
 * Added new `FileService` class to the WPF/Avalonia app to use the `File` class and not the `HttpClient`.
 * Added  a new App.Razor to the WPF/Avalonia app for custom Blazor layout and hook the shared state for handling navigation requests from WPF/Avalonia
 

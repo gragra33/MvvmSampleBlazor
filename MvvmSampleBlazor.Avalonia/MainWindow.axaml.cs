@@ -17,6 +17,5 @@ public partial class MainWindow : Window
         Resources.Add("rootComponents", rootComponents);
 
         InitializeComponent();
-    
     }
 }

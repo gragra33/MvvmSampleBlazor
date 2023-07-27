@@ -9,6 +9,9 @@ using Avalonia.Interactivity;
 
 namespace Baksteen.Avalonia.Blazor;
 
+// original: https://github.com/jpmikkers/Baksteen.Avalonia.Blazor
+// updated: to support latest support library versions
+
 public class BlazorWebView : NativeControlHost
 {
     private class DestroyableBlazorWebViewHandle : INativeControlHostDestroyableControlHandle
