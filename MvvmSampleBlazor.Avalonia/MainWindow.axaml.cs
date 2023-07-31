@@ -1,7 +1,5 @@
 using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Controls.Shapes;
-using DemoApp;
 using Microsoft.AspNetCore.Components.WebView.WindowsForms;
 
 namespace MvvmSampleBlazor.Avalonia;

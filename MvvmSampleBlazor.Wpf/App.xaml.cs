@@ -1,10 +1,6 @@
-﻿using System;
-using System.Net.Http;
-using System.Windows;
-using Blazing.Mvvm;
+﻿using Blazing.Mvvm;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Logging;
 using MvvmSample.Core.Services;
 using MvvmSampleBlazor.Extensions;

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Blazing.Mvvm.ComponentModel;
+﻿using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using MvvmSample.Core.ViewModels;
 using MvvmSampleBlazor.Avalonia.States;

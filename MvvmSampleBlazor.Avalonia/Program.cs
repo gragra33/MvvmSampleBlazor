@@ -9,44 +9,43 @@ using MvvmSampleBlazor.Avalonia.Extensions;
 using MvvmSampleBlazor.Extensions;
 using Refit;
 
-namespace MvvmSampleBlazor.Avalonia
+namespace MvvmSampleBlazor.Avalonia;
+
+internal class Program
 {
-    internal class Program
+    [STAThread]
+    public static void Main(string[] args)
     {
-        [STAThread]
-        public static void Main(string[] args)
-        {
-            HostApplicationBuilder appBuilder = Host.CreateApplicationBuilder(args);
-            appBuilder.Logging.AddDebug();
+        HostApplicationBuilder appBuilder = Host.CreateApplicationBuilder(args);
+        appBuilder.Logging.AddDebug();
         
-            appBuilder.Services.AddWindowsFormsBlazorWebView();
+        appBuilder.Services.AddWindowsFormsBlazorWebView();
 #if DEBUG
-            appBuilder.Services.AddBlazorWebViewDeveloperTools();
+        appBuilder.Services.AddBlazorWebViewDeveloperTools();
 #endif
-            appBuilder.Services
-                .AddSingleton(RestService.For<IRedditService>("https://www.reddit.com/"))
-                .AddViewModels()
-                .AddServicesWpf()
-                .AddMvvmNavigation();
+        appBuilder.Services
+            .AddSingleton(RestService.For<IRedditService>("https://www.reddit.com/"))
+            .AddViewModels()
+            .AddServicesWpf()
+            .AddMvvmNavigation();
 
-            using IHost host = appBuilder.Build();
+        using IHost host = appBuilder.Build();
 
-            host.Start();
+        host.Start();
 
-            try
-            {
-                BuildAvaloniaApp(host.Services)
-                    .StartWithClassicDesktopLifetime(args);
-            }
-            finally
-            {
-                Task.Run(async () => await host.StopAsync()).Wait();
-            }
+        try
+        {
+            BuildAvaloniaApp(host.Services)
+                .StartWithClassicDesktopLifetime(args);
         }
-
-        private static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
-            => AppBuilder.Configure(() => new App(serviceProvider))
-                .UsePlatformDetect()
-                .LogToTrace();
+        finally
+        {
+            Task.Run(async () => await host.StopAsync()).Wait();
+        }
     }
+
+    private static AppBuilder BuildAvaloniaApp(IServiceProvider serviceProvider)
+        => AppBuilder.Configure(() => new App(serviceProvider))
+            .UsePlatformDetect()
+            .LogToTrace();
 }

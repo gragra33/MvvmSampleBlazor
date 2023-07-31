@@ -1,7 +1,3 @@
-﻿using System;
+﻿namespace MvvmSampleBlazor.Avalonia.ViewModels;
 
-namespace MvvmSampleBlazor.Avalonia.ViewModels;
-
-public record NavigationAction(string Title, Action Action)
-{
-}
+public record NavigationAction(string Title, Action Action);

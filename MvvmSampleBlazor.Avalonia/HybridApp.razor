@@ -1,18 +1,15 @@
 ﻿@inject NavigationManager NavManager
 @inject IMvvmNavigationManager MvvmNavManager
-@using System.Reflection
-@using DemoApp.Shared
-@using MvvmSampleBlazor.Avalonia.Extensions
 @implements MvvmSampleBlazor.Avalonia.States.INavigation
 
-<Router AppAssembly="@typeof(MvvmSampleBlazor.Core.Root).Assembly">
+<Router AppAssembly="@typeof(Core.Root).Assembly">
     <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(NewMainLayout)" />
+        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
         <FocusOnNavigate RouteData="@routeData" Selector="h1" />
     </Found>
     <NotFound>
         <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(NewMainLayout)">
+        <LayoutView Layout="@typeof(MainLayout)">
             <p role="alert">Sorry, there's nothing at this address.</p>
         </LayoutView>
     </NotFound>
