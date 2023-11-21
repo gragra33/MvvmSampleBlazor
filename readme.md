@@ -61,6 +61,20 @@ I have kept the code as close to the original solution as possible. Blazor does 
 
 Download the project, run it, and compare with the [original](https://github.com/CommunityToolkit/MVVM-Samples).
 
+## Updates
+
+### v1.0.0 10 May, 2023
+
+* Initial release.
+
+### v1.1.0 26 July, 2023
+
+* Added Wpf & Avalonia sample Blazor Hybrid Apps
+
+### v1.4.0 21 November, 2023
+
+* Updated to .Net 8.0
+
 ## Support
 
 If you find this library useful, then please consider [buying me a coffee ☕](https://bmc.link/gragra33).
