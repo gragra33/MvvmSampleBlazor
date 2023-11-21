@@ -67,6 +67,10 @@ Download the project, run it, and compare with the [original](https://github.com
 
 * Initial release.
 
+### v1.1.0 26 July, 2023
+
+* Added Wpf & Avalonia sample Blazor Hybrid Apps
+
 ### v1.4.0 21 November, 2023
 
 * Updated to .Net 8.0
