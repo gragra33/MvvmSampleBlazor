@@ -2,16 +2,19 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
 	  <ApplicationManifest>app.manifest</ApplicationManifest>
+	  <Version>1.4.0</Version>
+	  <AssemblyVersion>1.4.0.0</AssemblyVersion>
+	  <FileVersion>1.4.0.0</FileVersion>
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blazing.Mvvm" Version="1.0.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="7.0.92" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+		<PackageReference Include="Blazing.Mvvm" Version="1.4.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebView.Wpf" Version="8.*" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="8.*" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFramework>net7.0</TargetFramework>
+	  <TargetFramework>net8.0</TargetFramework>
 	  <Nullable>enable</Nullable>
 	  <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>4e66f7b4-01a8-4f00-8733-4ae6a08c741f</UserSecretsId>
@@ -12,8 +12,8 @@
     <Compile Remove="ViewModels\Widgets\ValidatorViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
-	  <PackageReference Include="Blazing.Mvvm" Version="1.0.3" />
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+	  <PackageReference Include="Blazing.Mvvm" Version="1.4.0" />
+	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="5.1.2" />
     <PackageReference Include="Refit" Version="7.0.0" />
   </ItemGroup>
