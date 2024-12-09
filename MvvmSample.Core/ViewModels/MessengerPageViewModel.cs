@@ -3,14 +3,17 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Input;
+using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Services;
 
 namespace MvvmSample.Core.ViewModels;
 
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public class MessengerPageViewModel : SamplePageViewModel
 {
     public MessengerPageViewModel(IFilesService filesService) 

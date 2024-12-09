@@ -4,6 +4,7 @@
 
 using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Models;
 
 namespace MvvmSample.Core.ViewModels.Widgets;
@@ -11,6 +12,7 @@ namespace MvvmSample.Core.ViewModels.Widgets;
 /// <summary>
 /// A viewmodel for a post widget.
 /// </summary>
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public sealed class PostWidgetViewModel : RecipientViewModelBase<PropertyChangedMessage<Post>>
 {
     private Post? post;

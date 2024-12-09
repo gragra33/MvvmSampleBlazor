@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MvvmSample.Core.Services;
+using MvvmSample.Core.ViewModels;
 using MvvmSampleBlazor.Extensions;
 using MvvmSampleBlazor.Wpf.Extensions;
 using Refit;
@@ -24,9 +25,12 @@ public partial class App
 
         services
             .AddSingleton(RestService.For<IRedditService>("https://www.reddit.com/"))
-            .AddViewModels()
+            //.AddViewModels() // obsolete - now uses the ViewModelDefinition attribute & auto registration
             .AddServicesWpf()
-            .AddMvvmNavigation();
+            .AddMvvm(options =>
+            { 
+                options.RegisterViewModelsFromAssemblyContaining<SamplePageViewModel>();
+            });
 
 #if DEBUG
         builder.Logging.SetMinimumLevel(LogLevel.Trace);

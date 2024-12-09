@@ -10,29 +10,31 @@ namespace MvvmSampleBlazor.Extensions;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddViewModels(this IServiceCollection services)
-    {
-        services.AddTransient<IIntroductionPageViewModel, SamplePageViewModel>();
-        services.AddTransient<ObservableObjectPageViewModel>();
-        services.AddTransient<RelayCommandPageViewModel>();
-        services.AddTransient<AsyncRelayCommandPageViewModel>();
-        services.AddTransient<MessengerPageViewModel>();
-        services.AddTransient<MessengerSendPageViewModel>();
-        services.AddTransient<MessengerRequestPageViewModel>();
-        services.AddTransient<IocPageViewModel>();
-        services.AddTransient<ISettingUpTheViewModelsPageViewModel, SamplePageViewModel>();
-        services.AddTransient<ISettingsServicePageViewModel, SamplePageViewModel>();
-        services.AddTransient<IRedditServicePageViewModel, SamplePageViewModel>();
-        services.AddTransient<IBuildingTheUIPageViewModel, SamplePageViewModel>();
-        services.AddTransient<IRedditBrowserPageViewModel, SamplePageViewModel>();
+    // obsolete - now uses the ViewModelDefinition attribute & auto registration
+    //public static IServiceCollection AddViewModels(this IServiceCollection services)
+    //{
+    //    services.AddTransient<IIntroductionPageViewModel, SamplePageViewModel>();
+    //    services.AddTransient<ObservableObjectPageViewModel>();
+    //    services.AddTransient<RelayCommandPageViewModel>();
+    //    services.AddTransient<AsyncRelayCommandPageViewModel>();
+    //    services.AddTransient<MessengerPageViewModel>();
+    //    services.AddTransient<MessengerSendPageViewModel>();
+    //    services.AddTransient<MessengerRequestPageViewModel>();
+    //    services.AddTransient<IocPageViewModel>();
+    //    services.AddTransient<ISettingUpTheViewModelsPageViewModel, SamplePageViewModel>();
+    //    services.AddTransient<ISettingsServicePageViewModel, SamplePageViewModel>();
+    //    services.AddTransient<IRedditServicePageViewModel, SamplePageViewModel>();
+    //    services.AddTransient<IBuildingTheUIPageViewModel, SamplePageViewModel>();
+    //    services.AddTransient<IRedditBrowserPageViewModel, SamplePageViewModel>();
 
-        services.AddTransient<ContactsListWidgetViewModel>();
-        services.AddTransient<PostWidgetViewModel>();
-        services.AddTransient<SubredditWidgetViewModel>();
-        services.AddTransient<ValidationFormWidgetViewModel>();
+    //    services.AddTransient<ContactsListWidgetViewModel>();
+    //    services.AddTransient<PostWidgetViewModel>();
+    //    services.AddTransient<SubredditWidgetViewModel>();
+    //    services.AddTransient<ValidationFormWidgetViewModel>();
 
-        return services;
-    }
+    //    return services;
+    //}
+
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddTransient<IFilesService>(sp => new FilesService(sp.GetService<HttpClient>()));

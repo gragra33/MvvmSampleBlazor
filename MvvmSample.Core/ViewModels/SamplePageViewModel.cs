@@ -5,6 +5,7 @@
 using System.Text.RegularExpressions;
 using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Helpers;
 using MvvmSample.Core.Services;
 
@@ -13,6 +14,13 @@ namespace MvvmSample.Core.ViewModels;
 /// <summary>
 /// A base class for viewmodels for sample pages in the app.
 /// </summary>
+
+[ViewModelDefinition<IIntroductionPageViewModel>(Lifetime = ServiceLifetime.Transient)]
+[ViewModelDefinition<ISettingUpTheViewModelsPageViewModel>(Lifetime = ServiceLifetime.Transient)]
+[ViewModelDefinition<ISettingsServicePageViewModel>(Lifetime = ServiceLifetime.Transient)]
+[ViewModelDefinition<IRedditServicePageViewModel>(Lifetime = ServiceLifetime.Transient)]
+[ViewModelDefinition<IBuildingTheUIPageViewModel>(Lifetime = ServiceLifetime.Transient)]
+[ViewModelDefinition<IRedditBrowserPageViewModel>(Lifetime = ServiceLifetime.Transient)]
 public class SamplePageViewModel : ViewModelBase, 
     IIntroductionPageViewModel, 
     ISettingUpTheViewModelsPageViewModel, 
@@ -45,6 +53,8 @@ public class SamplePageViewModel : ViewModelBase,
         get => texts; 
         set => SetProperty(ref texts, value); 
     }
+
+    public IAsyncRelayCommand LoadedCommand { get; }
 
     /// <summary>
     /// Gets the markdown for a specified paragraph from the docs page.

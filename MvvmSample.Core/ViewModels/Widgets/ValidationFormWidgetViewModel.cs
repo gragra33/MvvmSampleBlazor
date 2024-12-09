@@ -2,12 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Services;
 
 namespace MvvmSample.Core.ViewModels.Widgets;
@@ -15,6 +14,7 @@ namespace MvvmSample.Core.ViewModels.Widgets;
 /// <summary>
 /// A viewmodel for the validation widget.
 /// </summary>
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public partial class ValidationFormWidgetViewModel : ValidatorViewModelBase
 {
     private readonly IDialogService DialogService;

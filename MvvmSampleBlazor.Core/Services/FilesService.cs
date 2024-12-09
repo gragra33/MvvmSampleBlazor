@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.Hosting;
-using MvvmSample.Core.Services;
+﻿using MvvmSample.Core.Services;
 
 namespace MvvmSampleBlazor.Services;
 

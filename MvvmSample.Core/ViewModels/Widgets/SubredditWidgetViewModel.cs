@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Models;
 using MvvmSample.Core.Services;
 using Nito.AsyncEx;
@@ -15,6 +16,7 @@ namespace MvvmSample.Core.ViewModels.Widgets;
 /// <summary>
 /// A viewmodel for a subreddit widget.
 /// </summary>
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public sealed class SubredditWidgetViewModel : RecipientViewModelBase
 {
     /// <summary>

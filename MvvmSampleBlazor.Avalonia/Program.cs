@@ -1,5 +1,4 @@
 ﻿using Avalonia;
-using System;
 using Blazing.Mvvm;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -8,6 +7,7 @@ using MvvmSample.Core.Services;
 using MvvmSampleBlazor.Avalonia.Extensions;
 using MvvmSampleBlazor.Extensions;
 using Refit;
+using MvvmSample.Core.ViewModels;
 
 namespace MvvmSampleBlazor.Avalonia;
 
@@ -25,9 +25,12 @@ internal class Program
 #endif
         appBuilder.Services
             .AddSingleton(RestService.For<IRedditService>("https://www.reddit.com/"))
-            .AddViewModels()
+            // .AddViewModels() // obsolete - now uses the ViewModelDefinition attribute & auto registration
             .AddServicesWpf()
-            .AddMvvmNavigation();
+            .AddMvvm(options =>
+            { 
+                options.RegisterViewModelsFromAssemblyContaining<SamplePageViewModel>();
+            });
 
         using IHost host = appBuilder.Build();
 

@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Collections;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Models;
 using MvvmSample.Core.Services;
 
@@ -17,6 +14,7 @@ namespace MvvmSample.Core.ViewModels.Widgets;
 /// <summary>
 /// A viewmodel for a contacts list widget.
 /// </summary>
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public partial class ContactsListWidgetViewModel : ViewModelBase
 {
     /// <summary>

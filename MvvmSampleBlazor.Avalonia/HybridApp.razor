@@ -30,5 +30,5 @@
         => NavManager.NavigateTo(page);
 
     public void NavigateTo<TViewModel>() where TViewModel : IViewModelBase
-        => MvvmNavManager.NavigateTo<TViewModel>(new NavigationOptions());
+        => MvvmNavManager.NavigateTo<TViewModel>(new BrowserNavigationOptions());
 }

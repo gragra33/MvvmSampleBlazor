@@ -2,13 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading.Tasks;
 using System.Windows.Input;
+using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Extensions.DependencyInjection;
 using MvvmSample.Core.Services;
 
 namespace MvvmSample.Core.ViewModels;
 
+[ViewModelDefinition(Lifetime = ServiceLifetime.Transient)]
 public class ObservableObjectPageViewModel : SamplePageViewModel
 {
     public ObservableObjectPageViewModel(IFilesService filesService) 

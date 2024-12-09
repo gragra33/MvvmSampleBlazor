@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using Blazing.Mvvm.ComponentModel;
+﻿using Blazing.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace MvvmSample.Core.ViewModels;
