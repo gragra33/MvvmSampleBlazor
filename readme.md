@@ -1,4 +1,10 @@
 # Blazor MVVM Sample for CommunityToolkit.Mvvm using Blazing.Mvvm
+
+> [!IMPORTANT]
+> *Merged into [Blazing.MVVM](https://github.com/gragra33/Blazing.Mvvm) repo - Now includes WinForms & MAUI projects*> 
+>
+> **This repo is no longer maintained.**
+
 I released the [Blazing.MVVM](https://github.com/gragra33/Blazing.Mvvm) library that enables Blazor to use the [CommunityToolkit.Mvvm](https://learn.microsoft.com/en-us/dotnet/communitytoolkit/mvvm/) with minimal effort. It also incldes Navigation by ViewModel (class/interface) - no more magic strings!
 
 Whilst the [repo](https://github.com/gragra33/Blazing.Mvvm) contains a basic sample project showing how to use the library, I wanted to include a sample that takes an existing project for a different application type and, with minimal changes, make it work for Blazor. So I have taken Microsoft's [Xamarin Sample Project](https://github.com/CommunityToolkit/MVVM-Samples) and converted it to Blazor.
